@@ -1,20 +1,15 @@
-import e from 'express'
 import{
     listAllPosts,
     listPostsByAuthor,
-    listPostsByTag,
-    getPostById,
-    createPost,
-    updatePost,
-    deletePost,
 } from '../services/posts.js'
 
 //create function postRoutes that receives an app object as a parameter
 //and uses https commands inside of the app object to define routes for handling HTTP requests related to blog posts.
 export function postRoutes(app) {
     //GET /posts: Retrieve a list of all blog posts.
-    app.get('/api/v1/posts/', async (req, res) => {
-        const { sortBy, sortOrder } = req.query
+    app.get('/posts', async (req, res) => {
+        const { sortBy, sortOrder, author, tag } = req.query
+        const options = {sortBy, sortOrder}
         try{
             if (author && tag) { 
                 return res.status(400).json({ error: 'query by either author or tag, not both' })
