@@ -3,6 +3,7 @@ import express from 'express'
 import { postRoutes } from './src/routes/posts.js'
 import { initDB } from './src/db/initdb.js'
 import bodyParser from 'body-parser'
+import cors from 'cors'
 
 
 dotenv.config()
