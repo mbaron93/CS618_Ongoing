@@ -4,7 +4,10 @@ import { Post} from './components/Post.jsx'
 import { CreatePost } from './components/CreatePost.jsx'
 import { PostList } from './components/PostList.jsx'
 import './App.css'
+import { useQuery } from '@tanstack/react-query'
+import { getPosts } from './api/posts.js'
 
+// eslint-disable-next-line no-unused-vars
 const posts = [
   {
     _id: '1',
@@ -19,8 +22,15 @@ const posts = [
 ]
 
 export function Blog() {
+  const postQuery = useQuery({
+    queryKey: ['posts'],
+    queryFn: () => getPosts(),
+  })
+
+  const posts2 = postQuery.data || []
+
   return (
-  <> <PostList posts={posts} />
+  <> <PostList posts={posts2} />
   <CreatePost /> </>
   )
 }

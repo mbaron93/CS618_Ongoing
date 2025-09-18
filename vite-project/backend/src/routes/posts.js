@@ -1,6 +1,7 @@
 import{
     listAllPosts,
     listPostsByAuthor,
+    listPostsByTag,
 } from '../services/posts.js'
 
 //create function postRoutes that receives an app object as a parameter
@@ -15,10 +16,10 @@ export function postRoutes(app) {
                 return res.status(400).json({ error: 'query by either author or tag, not both' })
             }
             else if (author) {
-                const posts = await listPostsByAuthor(tag)
+                const posts = await listPostsByAuthor(author, options)
                 res.json(posts)
             }else if (tag) {
-                const posts = await listAllPosts(options)
+                const posts = await listPostsByTag(tag, options)
                 res.json(posts)
             }
             else{
