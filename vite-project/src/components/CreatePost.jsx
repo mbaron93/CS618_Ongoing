@@ -25,7 +25,7 @@ export function CreatePost() {
         mutationFn: () => createPost({ title, author, contents }),
         onSuccess: () => queryClient.invalidateQueries(['posts']),
     })
-    
+
     const handleSubmit = (e) => { 
         //prevent the default form submission behavior which is
         //to reload the page
@@ -67,6 +67,7 @@ export function CreatePost() {
       value={createPostMutation.isPending ? 'Creating...' : 'Create'} 
       disabled={!title || createPostMutation.isPending}
       />
+      {createPostMutation.isSuccess ? <p>Post created!</p> : null}
     </form>
   )
 }
