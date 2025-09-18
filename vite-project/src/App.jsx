@@ -1,13 +1,12 @@
-import {Post} from './components/Post.jsx'
-import './App.css'
+import {QueryClient, QueryClientProvider} from '@tanstack/react-query'
+import {Blog} from './Blog.jsx'
 
-function App() {
-  return (
-    <Post
-      title="My First Post"
-      contents="This is the content of my first post."
-      author="John Doe"
-    />
-  )
-}
-export default App
+const queryClient = new QueryClient()
+
+export function App() {
+    return (
+        <QueryClientProvider client={queryClient}>  
+        <Blog />
+        </QueryClientProvider>
+    )
+}   
