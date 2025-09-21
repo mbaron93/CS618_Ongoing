@@ -1,3 +1,4 @@
+name: Blog Frontend CI
 on: 
  push:
   branches: 
