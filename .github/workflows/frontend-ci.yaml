@@ -21,7 +21,7 @@ on:
          cache: 'npm'
       -name: Install dependencies
         run: npm install
-      -namme: Run lint
+      -name: Run lint
        run: npm run lint
       -name: Run build
        run: npm run build
