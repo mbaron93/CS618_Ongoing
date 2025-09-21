@@ -1,5 +1,5 @@
 FROM node:20 
-WORKDIR /vite-project
+WORKDIR /app/vite-project
 COPY package.json package-lock.json ./
 RUN npm install
 COPY . .
