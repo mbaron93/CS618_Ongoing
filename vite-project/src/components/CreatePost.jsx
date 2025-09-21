@@ -1,9 +1,9 @@
 //the following three import statements were added
 //to enable the CreatePost component to work with the backend
 //useMutation is for making changes to data on the server
-import { useMutation } from '@tanstack/react-query'
+import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { useState } from 'react' 
-import { createPost, useQueryClient} from '../api/posts.js'
+import { createPost} from '../api/posts.js'
 
 export function CreatePost() { 
     //the following three constants were added

@@ -3,7 +3,7 @@ import { Post} from './components/Post.jsx'
 // eslint-disable-next-line no-unused-vars
 import { CreatePost } from './components/CreatePost.jsx'
 import { PostList } from './components/PostList.jsx'
-import './App.css'
+//import './App.css'
 import { useQuery } from '@tanstack/react-query'
 import { getPosts } from './api/posts.js'
 
@@ -30,7 +30,7 @@ export function Blog() {
   const posts2 = postQuery.data || []
 
   return (
-  <> <PostList posts={posts2} />
-  <CreatePost /> </>
+  <div> <PostList posts={posts2} />
+  <CreatePost /> </div>
   )
 }
