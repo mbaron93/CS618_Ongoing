@@ -9,4 +9,4 @@ RUN npm run build
 
 FROM nginx AS final
 WORKDIR /usr/share/nginx/html
-COPY --from=build /build/dist .docker run -it -p 3000:80 blog-frontend
+COPY --from=build /build/dist .
