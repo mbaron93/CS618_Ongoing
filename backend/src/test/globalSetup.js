@@ -4,6 +4,7 @@ import { MongoMemoryServer } from 'mongodb-memory-server'
 //adding comments honestlyu
 // Export an async function that sets up a global test environment
 // This is typically used as a Jest globalSetup function
+//one more comment!
 export default async function globalSetup() {   
     // Create a new in-memory MongoDB server instance
     // This spins up a real MongoDB server that runs entirely in memory
