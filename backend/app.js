@@ -13,7 +13,14 @@ try {
 
 const app = express();
 app.use(bodyParser.json());
-app.use(cors()); //accept requests from different origins
+app.use(
+  cors({
+    origin: "*",
+    credentials: true,
+  }),
+);
+
+//accept requests from different origins
 //cors = cross origin resource sharing
 //cors is for security reasons, browsers block requests from different origins by default
 
