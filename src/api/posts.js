@@ -7,6 +7,9 @@ export const getPosts = async (queryParams) => {
 }
 
 export const createPost = async (post) => {
+    console.log('VITE_BACKEND_URL:', import.meta.env.VITE_BACKEND_URL);
+    console.log('Full URL:', `${import.meta.env.VITE_BACKEND_URL}/posts`);
+    
     const res = await fetch(
         `${import.meta.env.VITE_BACKEND_URL}/posts`,    
         {
