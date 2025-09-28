@@ -10,7 +10,7 @@ services:
     build: backend/
     environment:
       - PORT=3001
-      - DATABASE_URL="mongodb+srv://new_user:newuser@myblog.py7uva4.mongodb.net/?retryWrites=true&w=majority&appName=MyBlog"
+      - DATABASE_URL=mongodb://blog-database:27017/blog
     ports:
       - "3001:3001"
     depends_on:
@@ -20,7 +20,7 @@ services:
     build:
       context: .
       args:
-        VITE_BACKEND_URL: https://blog-backend-861206262565.us-east4.run.app
+        VITE_BACKEND_URL: http://localhost:3001
     ports:
       - "3000:80"
     depends_on:
