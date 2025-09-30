@@ -26,7 +26,9 @@ jobs:
           context: ./backend
           file: ./backend/Dockerfile
           push: true
-          tags: ${{ secrets.DOCKERHUB_USERNAME }}/blog-backend
+          tags: 
+            ${{ secrets.DOCKERHUB_USERNAME }}/blog-backend:latest
+            ${{ secrets.DOCKERHUB_USERNAME }}/blog-backend:${{ github.sha }}
       - id: deploy-backend
         name: Deploy backend
         uses: google-github-actions/deploy-cloudrun@v1
@@ -40,7 +42,9 @@ jobs:
           context: .
           file: ./Dockerfile
           push: true
-          tags: ${{ secrets.DOCKERHUB_USERNAME }}/blog-frontend:latest
+          tags: 
+            ${{ secrets.DOCKERHUB_USERNAME }}/blog-frontend:latest
+            ${{ secrets.DOCKERHUB_USERNAME }}/blog-backend:${{ github.sha }}
           build-args: VITE_BACKEND_URL=${{ steps.deploy-backend.outputs.url }}
       - id: deploy-frontend
         name: Deploy frontend
