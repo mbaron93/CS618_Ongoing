@@ -34,9 +34,8 @@ jobs:
         uses: google-github-actions/deploy-cloudrun@v1
         with: 
           service: blog-backend
-          image: docker.io/${{ secrets.DOCKERHUB_USERNAME }}/blog-backend:latest
+          image: docker.io/${{ secrets.DOCKERHUB_USERNAME }}/blog-backend:${{ github.sha }}
           region: ${{ secrets.GOOGLECLOUD_REGION }}
-          flags: '--no-cache'
       - name: Build and push frontend image
         uses: docker/build-push-action@v4
         with:
@@ -52,6 +51,5 @@ jobs:
         uses: google-github-actions/deploy-cloudrun@v1
         with:
           service: blog-frontend
-          flags: '--no-cache'
-          image: docker.io/${{ secrets.DOCKERHUB_USERNAME }}/blog-frontend:latest
+          image: docker.io/${{ secrets.DOCKERHUB_USERNAME }}/${{ github.sha }}
           region: ${{ secrets.GOOGLECLOUD_REGION }}
