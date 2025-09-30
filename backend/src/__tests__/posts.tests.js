@@ -1,5 +1,5 @@
 import mongoose from 'mongoose'
-import { describe, expect, test, beforeEach, beforeAll } from '@jest/globals'
+import { describe, expect, test, beforeEach, beforeAll, afterAll } from '@jest/globals'
 import {
   createPost,
   listAllPosts,
@@ -26,6 +26,11 @@ beforeAll(async () => {
       tags: ['react', 'nodejs'],
     },
   ]
+})
+
+// ADD THIS - Close the database connection after all tests
+afterAll(async () => {
+  await mongoose.connection.close()
 })
 
 describe('creating posts', () => {
