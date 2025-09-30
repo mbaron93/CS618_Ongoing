@@ -1,11 +1,12 @@
 // eslint-disable-next-line no-unused-vars
-import { Post} from './components/Post.jsx'
+import { Post} from '../components/Post.jsx'
 // eslint-disable-next-line no-unused-vars
-import { CreatePost } from './components/CreatePost.jsx'
-import { PostList } from './components/PostList.jsx'
+import { CreatePost } from '../components/CreatePost.jsx'
+import { PostList } from '../components/PostList.jsx'
 //import './App.css'
 import { useQuery } from '@tanstack/react-query'
-import { getPosts } from './api/posts.js'
+import { getPosts } from '../api/posts.js'
+import {Header} from '../components/Header.jsx'
 
 // eslint-disable-next-line no-unused-vars
 const posts = [
@@ -30,7 +31,9 @@ export function Blog() {
   const posts2 = postQuery.data || []
 
   return (
-  <div> <PostList posts={posts2} />
+  <div> 
+  <Header />
+    <PostList posts={posts2} />
   <CreatePost /> </div>
   )
 }
