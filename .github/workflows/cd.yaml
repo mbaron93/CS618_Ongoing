@@ -44,7 +44,7 @@ jobs:
           push: true
           tags: |
             ${{ secrets.DOCKERHUB_USERNAME }}/blog-frontend:latest
-            ${{ secrets.DOCKERHUB_USERNAME }}/blog-backend:${{ github.sha }}
+            ${{ secrets.DOCKERHUB_USERNAME }}/blog-frontend:${{ github.sha }}
           build-args: VITE_BACKEND_URL=${{ steps.deploy-backend.outputs.url }}
       - id: deploy-frontend
         name: Deploy frontend
