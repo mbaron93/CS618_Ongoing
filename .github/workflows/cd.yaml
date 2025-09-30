@@ -29,6 +29,8 @@ jobs:
           tags: |
             ${{ secrets.DOCKERHUB_USERNAME }}/blog-backend:latest
             ${{ secrets.DOCKERHUB_USERNAME }}/blog-backend:${{ github.sha }}
+      - name: Debug - Show region
+        run: echo "Region is ${{ secrets.GOOGLECLOUD_REGION }}"
       - id: deploy-backend
         name: Deploy backend
         uses: google-github-actions/deploy-cloudrun@v1
