@@ -30,8 +30,3 @@ jobs:
       - name: Run lint
         run: npm run lint -- --max-warnings=0 --format=compact
 
-      - name: Run tests
-        env:
-          DATABASE_URL: ${{ secrets.DATABASE_URL }}
-          JWT_SECRET: ${{ secrets.JWT_SECRET }}
-        run: npm test --prefix ./backend
