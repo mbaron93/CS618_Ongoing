@@ -2,13 +2,14 @@ import {
   listAllPosts,
   listPostsByAuthor,
   listPostsByTag,
+  getPostById,
   createPost,
+  updatePost,
+  deletePost,
 } from "../services/posts.js";
+import { requireAuth } from "../middleware/jwt.js";
 
-//create function postRoutes that receives an app object as a parameter
-//and uses https commands inside of the app object to define routes for handling HTTP requests related to blog posts.
 export function postRoutes(app) {
-  //GET /posts: Retrieve a list of all blog posts.
   app.get("/posts", async (req, res) => {
     const { sortBy, sortOrder, author, tag } = req.query;
     const options = { sortBy, sortOrder };
@@ -18,25 +19,33 @@ export function postRoutes(app) {
           .status(400)
           .json({ error: "query by either author or tag, not both" });
       } else if (author) {
-        const posts = await listPostsByAuthor(author, options);
-        res.json(posts);
+        return res.json(await listPostsByAuthor(author, options));
       } else if (tag) {
-        const posts = await listPostsByTag(tag, options);
-        res.json(posts);
+        return res.json(await listPostsByTag(tag, options));
       } else {
         return res.json(await listAllPosts(options));
       }
-    } catch (error) {
-      console.error("Error fetching posts:", error);
-      res.status(500).end();
+    } catch (err) {
+      console.error("error listing posts", err);
+      return res.status(500).end();
     }
   });
 
-  //other routes related to posts can be added here
-  //first, starting with the create post route
-  app.post("/posts", async (req, res) => {
+  app.get("/posts/:id", async (req, res) => {
+    const { id } = req.params;
     try {
-      const post = await createPost(req.body);
+      const post = await getPostById(id);
+      if (post === null) return res.status(404).end();
+      return res.json(post);
+    } catch (err) {
+      console.error("error getting post", err);
+      return res.status(500).end();
+    }
+  });
+
+  app.post("/posts", requireAuth, async (req, res) => {
+    try {
+      const post = await createPost(req.auth.sub, req.body);
       return res.json(post);
     } catch (err) {
       console.error("error creating post", err);
@@ -44,6 +53,24 @@ export function postRoutes(app) {
     }
   });
 
-  //need to add update and delete routes
-  //once id system is set up
+  app.patch("/posts/:id", requireAuth, async (req, res) => {
+    try {
+      const post = await updatePost(req.auth.sub, req.params.id, req.body);
+      return res.json(post);
+    } catch (err) {
+      console.error("error updating post", err);
+      return res.status(500).end();
+    }
+  });
+
+  app.delete("/posts/:id", requireAuth, async (req, res) => {
+    try {
+      const { deletedCount } = await deletePost(req.auth.sub, req.params.id);
+      if (deletedCount === 0) return res.sendStatus(404);
+      return res.status(204).end();
+    } catch (err) {
+      console.error("error deleting post", err);
+      return res.status(500).end();
+    }
+  });
 }

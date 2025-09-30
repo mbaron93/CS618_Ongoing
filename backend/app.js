@@ -1,15 +1,13 @@
 import dotenv from "dotenv";
 import express from "express";
+import { userRoutes } from "./src/routes/users.js";
 import { postRoutes } from "./src/routes/posts.js";
 import { initDB } from "./src/db/initdb.js";
 import bodyParser from "body-parser";
 import cors from "cors";
 
-try {
-  require("dotenv").config();
-} catch (err) {
-  console.log("No .env file found, using environment variables");
-}
+dotenv.config();
+
 
 const app = express();
 app.use(bodyParser.json());
@@ -30,5 +28,6 @@ app.get("/", (req, res) => {
 
 await initDB();
 postRoutes(app);
+userRoutes(app);
 
 export { app };
