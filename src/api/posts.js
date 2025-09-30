@@ -5,20 +5,14 @@ export const getPosts = async (queryParams) => {
     )
     return await res.json()
 }
-
-export const createPost = async (post) => {
-    console.log('VITE_BACKEND_URL:', import.meta.env.VITE_BACKEND_URL);
-    console.log('Full URL:', `${import.meta.env.VITE_BACKEND_URL}/posts`);
-    
-    const res = await fetch(
-        `${import.meta.env.VITE_BACKEND_URL}/posts`,    
-        {
-            //method means what kind of HTTP request we are making
-            method: 'POST', 
-            //headers are metadata about the request
-            headers: { 'Content-Type': 'application/json' }, 
-            //the body property contains the data we are sending to the server
-            body: JSON.stringify(post),
-        })
-    return await res.json()
+export const createPost = async (token, post) => {
+  const res = await fetch(`${import.meta.env.VITE_BACKEND_URL}/posts`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${token}`,
+    },
+    body: JSON.stringify(post),
+  })
+  return await res.json()
 }

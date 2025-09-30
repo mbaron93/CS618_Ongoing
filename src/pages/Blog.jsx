@@ -33,7 +33,9 @@ export function Blog() {
   return (
   <div> 
   <Header />
+  <hr/>
     <PostList posts={posts2} />
+    <hr/>
   <CreatePost /> </div>
   )
 }
