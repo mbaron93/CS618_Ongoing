@@ -51,5 +51,5 @@ jobs:
         uses: google-github-actions/deploy-cloudrun@v1
         with:
           service: blog-frontend
-          image: docker.io/${{ secrets.DOCKERHUB_USERNAME }}/${{ github.sha }}
+          image: docker.io/${{ secrets.DOCKERHUB_USERNAME }}/blog-frontend:${{ github.sha }}
           region: ${{ secrets.GOOGLECLOUD_REGION }}
