@@ -28,7 +28,6 @@ jobs:
           push: true
           tags: |
             ${{ secrets.DOCKERHUB_USERNAME }}/blog-backend:latest
-            ${{ secrets.DOCKERHUB_USERNAME }}/blog-backend:${{ github.sha }}
       - name: Debug - Show region
         run: echo "Region is ${{ secrets.GOOGLECLOUD_REGION }}"
       - id: deploy-backend
@@ -36,8 +35,8 @@ jobs:
         uses: google-github-actions/deploy-cloudrun@v1
         with: 
           service: blog-backend
-          image: docker.io/${{ secrets.DOCKERHUB_USERNAME }}/blog-backend:${{ github.sha }}
-          region: ${{ secrets.GOOGLECLOUD_REGION }}
+          image: docker.io/${{ secrets.DOCKERHUB_USERNAME }}/blog-backend:latest
+          region: us-east4
       - name: Build and push frontend image
         uses: docker/build-push-action@v4
         with:
@@ -46,12 +45,11 @@ jobs:
           push: true
           tags: |
             ${{ secrets.DOCKERHUB_USERNAME }}/blog-frontend:latest
-            ${{ secrets.DOCKERHUB_USERNAME }}/blog-frontend:${{ github.sha }}
           build-args: VITE_BACKEND_URL=${{ steps.deploy-backend.outputs.url }}
       - id: deploy-frontend
         name: Deploy frontend
         uses: google-github-actions/deploy-cloudrun@v1
         with:
           service: blog-frontend
-          image: docker.io/${{ secrets.DOCKERHUB_USERNAME }}/blog-frontend:${{ github.sha }}
-          region: ${{ secrets.GOOGLECLOUD_REGION }}
+          image: docker.io/${{ secrets.DOCKERHUB_USERNAME }}/blog-frontend:latest
+          region: us-east4
