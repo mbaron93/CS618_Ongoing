@@ -1,41 +1,48 @@
-// eslint-disable-next-line no-unused-vars
-import { Post} from '../components/Post.jsx'
-// eslint-disable-next-line no-unused-vars
-import { CreatePost } from '../components/CreatePost.jsx'
-import { PostList } from '../components/PostList.jsx'
-//import './App.css'
+import { useState } from 'react'
 import { useQuery } from '@tanstack/react-query'
+import { PostList } from '../components/PostList.jsx'
+import { CreatePost } from '../components/CreatePost.jsx'
+import { PostFilter } from '../components/PostFilter.jsx'
+import { PostSorting } from '../components/PostSorting.jsx'
+import { Header } from '../components/Header.jsx'
 import { getPosts } from '../api/posts.js'
-import {Header} from '../components/Header.jsx'
-
-// eslint-disable-next-line no-unused-vars
-const posts = [
-  {
-    _id: '1',
-    title: 'My first post',
-    contents: 'This is my first post. I hope you like it.',
-  },
-  {
-    _id: '2',
-    title: 'My second post',
-    contents: "This is my second post. I hope you like it.",
-  }
-]
 
 export function Blog() {
-  const postQuery = useQuery({
-    queryKey: ['posts'],
-    queryFn: () => getPosts(),
-  })
+  const [author, setAuthor] = useState('')
+  const [sortBy, setSortBy] = useState('createdAt')
+  const [sortOrder, setSortOrder] = useState('descending')
 
-  const posts2 = postQuery.data || []
+  const postsQuery = useQuery({
+    queryKey: ['posts', { author, sortBy, sortOrder }],
+    queryFn: () => getPosts({ author, sortBy, sortOrder }),
+  })
+  const posts = postsQuery.data ?? []
 
   return (
-  <div> 
-  <Header />
-  <hr/>
-    <PostList posts={posts2} />
-    <hr/>
-  <CreatePost /> </div>
+    <div style={{ padding: 8 }}>
+      <Header />
+      <br />
+      <hr />
+      <br />
+      <CreatePost />
+      <br />
+      <hr />
+      Filter by:
+      <PostFilter
+        field='author'
+        value={author}
+        onChange={(value) => setAuthor(value)}
+      />
+      <br />
+      <PostSorting
+        fields={['createdAt', 'updatedAt']}
+        value={sortBy}
+        onChange={(value) => setSortBy(value)}
+        orderValue={sortOrder}
+        onOrderChange={(orderValue) => setSortOrder(orderValue)}
+      />
+      <hr />
+      <PostList posts={posts} />
+    </div>
   )
 }
